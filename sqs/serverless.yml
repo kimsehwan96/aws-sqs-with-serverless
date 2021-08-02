@@ -4,7 +4,8 @@ provider:
   name: aws
   runtime: python3.7
   stage: dev
-
+  environment:
+    QUEUE_NAME: !Ref PocQueue
 
 functions:
   sender:
@@ -36,8 +37,7 @@ resources:
       Value: { Fn::GetAtt: [PocQueue, QueueName] }
       Export:
         Name: pocQueueName
-#    pocQueueUrl:
-#      Value: { Fn::GetAtt: [PocQueue, Url] }
-#      Export:
-#        Name: PocQueueUrl
-# How To Get Queue's Url in this template?
+    pocQueueUrl:
+      Value: !Ref PocQueue
+      Export:
+        Name: PocQueueUrl
