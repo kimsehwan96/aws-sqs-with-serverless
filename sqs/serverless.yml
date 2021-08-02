@@ -1,0 +1,29 @@
+service: sqs-poc
+
+provider:
+  name: aws
+  runtime: python3.7
+  stage: dev
+
+
+functions:
+  sender:
+    handler: sender.handler
+    events:
+      - http:
+          method: post
+          path: send
+    target:
+      handler: target.handler
+      evenets:
+        - sqs:
+            arn:
+              Fn::GetAtt:
+                - PocQueue
+                - Arn
+resources:
+  Resources:
+    PocQueue:
+      Type: "AWS::SQS::Queue"
+      Properties:
+        QueueName: "PocQueue"
