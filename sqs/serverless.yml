@@ -34,7 +34,9 @@ resources:
     PocQueue:
       Type: "AWS::SQS::Queue"
       Properties:
-        QueueName: "PocQueue"
+        QueueName: "PocQueue.fifo"
+        FifoQueue: "true"
+        ContentBasedDeduplication: "true"
   Outputs:
     pocQueueArn:
       Value: { Fn::GetAtt: [PocQueue, Arn] }

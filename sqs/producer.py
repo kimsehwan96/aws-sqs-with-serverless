@@ -2,7 +2,7 @@ import boto3
 import os
 import json
 
-QUEUE_NAME = os.environ.get('QUEUE_NAME', 'PocQueue')
+QUEUE_NAME = os.environ.get('QUEUE_NAME', 'PocQueue.fifo')
 QUEUE_URL = os.environ.get('QUEUE_URL')
 
 client = boto3.client('sqs')
@@ -14,7 +14,8 @@ def handler(event, context):
         try:
             res = client.send_message(
                 QueueUrl=QUEUE_URL,
-                MessageBody=event.get('body')
+                MessageBody=event.get('body'),
+                MessageGroupId= 'ingkle'
             )
             print(res)
             return json.dumps(res)
