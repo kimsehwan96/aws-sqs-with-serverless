@@ -6,7 +6,9 @@ def handler(event, context):
     if len(records) != 1:
         pass # 길이가 1이 아니라는건 중복 메시지가 들어왔다는 의미일듯
     else:
-        sms = SMS(records.get('body'))
+        message = records[0].get('body')
+        print('this is message : ', message)
+        sms = SMS(message)
         res = sms.send()
         print(res)
 
