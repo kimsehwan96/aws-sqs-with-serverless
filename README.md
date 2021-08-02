@@ -81,3 +81,41 @@ resources:
         Name: PocQueueUrl
 
 ```
+
+## 테스트 방법
+
+`git clone https://github.com/kimsehwan96/aws-sqs-with-serverless.git`
+
+`cd aws-sqs-with-serverless`
+`notifications.py 파일의 다음 내용 수정`
+
+```python3
+import boto3
+import json
+from notification_base import BaseNotification
+
+
+class SMS(BaseNotification):
+    def __init__(self, message):
+        super().__init__()
+        self.message = message
+        print('this is sending message :', self.message)
+        self.client = boto3.client('sns', region_name='ap-northeast-1')
+
+    def send(self):
+        res = self.client.publish(
+            PhoneNumber="+8201042707227",
+            Message=str(self.message)
+        )
+        return json.dumps(res)
+
+```
+
+`PhoneNumber 부분을 자신의 전화번호로 수정`
+
+` sls deploy --stage dev --region ap-northeast-2`
+
+위 명령어를 통해 배포
+
+이후 생성된 API Gateway 엔드포인트로 `Post` 메서드를 이용, Body에 Rawmessage로 문자열을 입력하고 전송하면
+문자메시지 전달 받음. 중복된 컨텐츠는 전달 받지 않음
