@@ -12,7 +12,7 @@ def handler(event, context):
         try:
             res = client.send_message(
                 QueueUrl=QUEUE_URL,
-                MessageBody=event.body
+                MessageBody=event.get('body')
             )
             print(res)
             return res
