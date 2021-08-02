@@ -17,14 +17,14 @@ provider:
     QUEUE_NAME: { Fn::GetAtt: [PocQueue, QueueName] }
 
 functions:
-  sender:
-    handler: sender.handler
+  producer:
+    handler: producer.handler
     events:
       - http:
           method: post
           path: send
-  target:
-    handler: target.handler
+  consumer:
+    handler: consumer.handler
     events:
       - sqs:
           arn: { Fn::GetAtt: [PocQueue, Arn] }
