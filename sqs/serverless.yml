@@ -4,6 +4,13 @@ provider:
   name: aws
   runtime: python3.7
   stage: dev
+  iamRoleStatements:
+    - Effect: "Allow"
+      Action:
+        - "logs:*"
+        - "sqs:*"
+        - "lambda:*"
+      Resource: "*"
   environment:
     QUEUE_URL: !Ref PocQueue
     QUEUE_NAME: { Fn::GetAtt: [PocQueue, QueueName] }
