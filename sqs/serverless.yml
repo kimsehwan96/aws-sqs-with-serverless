@@ -27,3 +27,17 @@ resources:
       Type: "AWS::SQS::Queue"
       Properties:
         QueueName: "PocQueue"
+  Outputs:
+    pocQueueArn:
+      Value: { Fn::GetAtt: [PocQueue, Arn] }
+      Export:
+        Name: pocQueueArn
+    pocQueueName:
+      Value: { Fn::GetAtt: [PocQueue, QueueName] }
+      Export:
+        Name: pocQueueName
+#    pocQueueUrl:
+#      Value: { Fn::GetAtt: [PocQueue, Url] }
+#      Export:
+#        Name: PocQueueUrl
+# How To Get Queue's Url in this template?
