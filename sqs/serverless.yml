@@ -13,14 +13,14 @@ functions:
       - http:
           method: post
           path: send
-    target:
-      handler: target.handler
-      evenets:
-        - sqs:
-            arn:
-              Fn::GetAtt:
-                - PocQueue
-                - Arn
+  target:
+    handler: target.handler
+    events:
+      - sqs:
+          arn:
+            Fn::GetAtt:
+              - PocQueue
+              - Arn
 resources:
   Resources:
     PocQueue:
