@@ -5,7 +5,8 @@ provider:
   runtime: python3.7
   stage: dev
   environment:
-    QUEUE_NAME: !Ref PocQueue
+    QUEUE_URL: !Ref PocQueue
+    QUEUE_NAME: { Fn::GetAtt: [PocQueue, QueueName] }
 
 functions:
   sender:
@@ -18,10 +19,8 @@ functions:
     handler: target.handler
     events:
       - sqs:
-          arn:
-            Fn::GetAtt:
-              - PocQueue
-              - Arn
+          arn: { Fn::GetAtt: [PocQueue, Arn] }
+
 resources:
   Resources:
     PocQueue:
