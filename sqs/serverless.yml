@@ -10,6 +10,7 @@ provider:
         - "logs:*"
         - "sqs:*"
         - "lambda:*"
+        - "sns:*"
       Resource: "*"
   environment:
     QUEUE_URL: !Ref PocQueue
